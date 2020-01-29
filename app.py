@@ -40,7 +40,7 @@ async def root(req, resp):
   elif req.method == "post":
     data = await req.media()
     resp.media = data
-    resp.content = f"{(time.time() - start):6.3f} post"
+    resp.content = f"{(time.time() - start):6.3f} post {data}"
   else:
     resp.content = f"{(time.time() - start):6.3f} ?"
 

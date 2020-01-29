@@ -1,7 +1,9 @@
 # coding: utf-8
 
 """
-[参考] https://qiita.com/tez/items/939168dbb31905948f46
+[参考]
+https://qiita.com/tez/items/939168dbb31905948f46
+https://qiita.com/DeliciousBar/items/19ec5107853bd1019f53
 """
 
 import time
@@ -9,7 +11,11 @@ import time
 import responder
 
 
-api = responder.API()
+api = responder.API(cors=True, cors_params={
+    'allow_origins': ['*'],
+    'allow_methods': ['*'],
+    'allow_headers': ['*'],
+})
 
 @api.route("/")
 def root(req, resp):

@@ -5,6 +5,7 @@
 https://qiita.com/tez/items/939168dbb31905948f46
 https://qiita.com/DeliciousBar/items/19ec5107853bd1019f53
 https://qiita.com/nagataaaas/items/edb5017e0713a996e9ee
+https://qiita.com/nskydiving/items/b98d5cea5a52459cb183
 """
 
 import time
@@ -34,7 +35,8 @@ async def root(req, resp):
   sleep(start, 10)
 
   if req.method == "get":
-    resp.content = f"{(time.time() - start):6.3f} get"
+    #resp.content = f"{(time.time() - start):6.3f} get"
+    resp.content = api.template('index.html')
   elif req.method == "post":
     data = await req.media()
     resp.media = data

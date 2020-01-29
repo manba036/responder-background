@@ -4,6 +4,7 @@
 [参考]
 https://qiita.com/tez/items/939168dbb31905948f46
 https://qiita.com/DeliciousBar/items/19ec5107853bd1019f53
+https://qiita.com/nagataaaas/items/edb5017e0713a996e9ee
 """
 
 import time
@@ -18,11 +19,12 @@ api = responder.API(cors=True, cors_params={
 })
 
 @api.route("/")
-def root(req, resp):
+async def root(req, resp):
   @api.background.task
   def sleep(start, s):
     time.sleep(s)
     print(f"# {(time.time() - start):6.3f} sleep({s})")
+    return
 
   start = time.time()
   print(f"# {(time.time() - start):6.3f} 応答開始")
@@ -31,7 +33,15 @@ def root(req, resp):
   sleep(start, 5)
   sleep(start, 10)
 
-  resp.content = f"{(time.time() - start):6.3f} resp"
+  if req.method == "get":
+    resp.content = f"{(time.time() - start):6.3f} get"
+  elif req.method == "post":
+    data = await req.media()
+    resp.media = data
+    resp.content = f"{(time.time() - start):6.3f} post"
+  else:
+    resp.content = f"{(time.time() - start):6.3f} ?"
+
   print(f"# {(time.time() - start):6.3f} 応答終了")
   return
 

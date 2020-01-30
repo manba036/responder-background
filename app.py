@@ -8,6 +8,7 @@ https://qiita.com/nagataaaas/items/edb5017e0713a996e9ee
 https://qiita.com/nskydiving/items/b98d5cea5a52459cb183
 """
 
+import json
 import time
 
 import responder
@@ -40,7 +41,8 @@ async def root(req, resp):
   elif req.method == "post":
     data = await req.media()
     resp.media = data
-    resp.content = f"{(time.time() - start):6.3f} post {data}"
+    resp.headers = {"Content-Type": "application/json; charset=utf-8"}
+    resp.content = json.dumps({ 'time': (time.time() - start), 'post': data }, ensure_ascii=False)
     print(f"{(time.time() - start):6.3f} post {data}")
   else:
     resp.content = f"{(time.time() - start):6.3f} ?"

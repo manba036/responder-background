@@ -41,6 +41,7 @@ async def root(req, resp):
     data = await req.media()
     resp.media = data
     resp.content = f"{(time.time() - start):6.3f} post {data}"
+    print(f"{(time.time() - start):6.3f} post {data}")
   else:
     resp.content = f"{(time.time() - start):6.3f} ?"
 

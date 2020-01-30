@@ -6,12 +6,15 @@ https://qiita.com/tez/items/939168dbb31905948f46
 https://qiita.com/DeliciousBar/items/19ec5107853bd1019f53
 https://qiita.com/nagataaaas/items/edb5017e0713a996e9ee
 https://qiita.com/nskydiving/items/b98d5cea5a52459cb183
+https://www.subarunari.com/entry/python-web-responder
 """
 
 import json
 import time
 
 import responder
+
+import flask_sample
 
 
 api = responder.API(cors=True, cors_params={
@@ -48,6 +51,13 @@ async def root(req, resp):
     resp.content = f"{(time.time() - start):6.3f} ?"
 
   print(f"# {(time.time() - start):6.3f} 応答終了")
+  return
+
+api.mount("/flask", flask_sample.app)
+
+@api.route("/responder/{name}")
+def root(req, resp, *, name):
+  resp.text = f"Hello, {name}"
   return
 
 

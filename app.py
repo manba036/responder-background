@@ -39,16 +39,14 @@ async def root(req, resp):
   sleep(start, 10)
 
   if req.method == "get":
-    #resp.content = f"{(time.time() - start):6.3f} get"
     resp.content = api.template('index.html')
   elif req.method == "post":
     data = await req.media()
-    resp.media = data
     resp.headers = {"Content-Type": "application/json; charset=utf-8"}
     resp.content = json.dumps({ 'time': (time.time() - start), 'post': data }, ensure_ascii=False)
     print(f"{(time.time() - start):6.3f} post {data}")
   else:
-    resp.content = f"{(time.time() - start):6.3f} ?"
+    resp.text = f"{(time.time() - start):6.3f} ?"
 
   print(f"# {(time.time() - start):6.3f} 応答終了")
   return
